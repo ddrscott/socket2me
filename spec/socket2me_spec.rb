@@ -1,4 +1,6 @@
 require 'spec_helper'
+require 'rack'
+require 'rack/mock'
 
 describe Socket2me do
   it 'has a version number' do
@@ -16,5 +18,14 @@ describe Socket2me do
 
     expect(Socket2me.config.ws_host).to eq('cats')
     expect(Socket2me.config.ws_port).to eq('dogs')
+  end
+
+  let(:app) { ->(_) { [200, {'Content-Type' => 'text/html'}, ['<html><body></body></html>']] } }
+
+  let(:middleware) { Socket2me::Middleware::AddScriptTag.new(app) }
+
+  it 'adds script tag' do
+    _, _, body = middleware.call Rack::MockRequest.env_for('http://test.example.com')
+    expect(body.join).to match(/<(script)>.+<\/\1>/m)
   end
 end
