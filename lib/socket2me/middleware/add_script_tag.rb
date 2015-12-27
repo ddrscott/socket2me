@@ -11,6 +11,11 @@ module Socket2me
         @ws_url = "ws://#{Socket2me.config.ws_host}:#{Socket2me.config.ws_port}"
       end
 
+      # 1. look for a text/html response type from parent app.
+      # 2. replace the closing `</body>` with the WebSocket client code.
+      #
+      # @param [Hash] env about Rack environment and the request
+      # @return [String, Hash, Array[String]]
       def call(env)
         response = @app.call(env)
         status, headers, body = *response
@@ -25,12 +30,14 @@ module Socket2me
         return status, headers, [full_body]
       end
 
+      # @return [String] the outer Javascript tag with WS client script
       def script_tag
         js = ERB.new(js_erb).result(binding)
         "<script>#{js}</script>"
       end
 
-
+      # Adjust the javascript client code as needed.
+      # @return [String] inner javascript contents.
       def js_erb
         <<-JS
 (function () {

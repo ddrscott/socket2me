@@ -1,3 +1,5 @@
+require 'logger'
+
 module Socket2me
 
   class Configuration
@@ -10,6 +12,16 @@ module Socket2me
     def initialize
       @ws_host = '0.0.0.0'
       @ws_port = '3001'
+    end
+
+    # @return [Logger] a basic STDOUT logger if one hasn't been set
+    def logger
+      @logger ||= Logger.new(STDOUT)
+    end
+
+    # @param [Logger] logger to use
+    def logger=(logger)
+      @logger = logger
     end
   end
 
