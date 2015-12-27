@@ -1,15 +1,38 @@
 # Socket2me
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/socket2me`. To experiment with that code, run `bin/console` for an interactive prompt.
+Execute Javascript in the browser from the server using WebSockets.
 
-TODO: Delete this and the text above, and describe your gem
+This is a proof of concept. There are no attempts to secure this feature or
+even make it practical in a multi-user environment. That's right, any browser
+that is viewing the site is going to get the same javascript executed on it.
+This gem should really only ever be used in development.
+
+The original use for this was to send all logs to browser as it was appended.
+
+```ruby
+def pipe_to_browser(src)
+  File.open(src,"r") do |f|
+    f.seek(0,IO::SEEK_END)
+    while true do
+      IO.select([f])    # wait for change
+      line = f.gets
+      Socket2me.exec_js "$('#logs').append(#{line.to_json})"
+    end
+  end
+end
+Thread.new{pipe_to_browser('log/development.log')}
+```
+
+Please don't run this in production. Ever.
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'socket2me'
+group :development, :test do
+  gem 'socket2me'
+end
 ```
 
 And then execute:
@@ -22,7 +45,25 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+### Rack
+
+```ruby
+# config.ru
+use SocketToMe::Middleware::AddScriptTag
+```
+
+### Rails
+```ruby
+# config/environments/development.rb
+config.middleware.use SocketToMe::Middleware::AddScriptTag
+```
+
+### Execute Javascript
+
+```
+# elsewhere.rb
+SocketToMe.exec_js "alert('hello world!')"
+```
 
 ## Development
 
@@ -32,7 +73,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/socket2me.
+Bug reports and pull requests are welcome on GitHub at https://github.com/ddrscott/socket2me.
 
 
 ## License
