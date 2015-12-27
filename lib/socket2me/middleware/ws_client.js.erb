@@ -1,0 +1,32 @@
+(function () {
+    var socket = new WebSocket("ws://localhost:<%= @ws_port %>");
+
+    function log(message) {
+        console.log.call(console, arguments);
+    }
+
+    function connect() {
+        try {
+
+            log("Socket State: " + socket.readyState);
+
+            socket.onopen = function () {
+                log("Socket Status: " + socket.readyState + " (open)");
+            };
+
+            socket.onclose = function () {
+                log("Socket Status: " + socket.readyState + " (closed)");
+            };
+
+            socket.onmessage = function (msg) {
+                log("Received: " + msg.data);
+                // execute in an anonymous function
+                new Function(msg)();
+            }
+        } catch (exception) {
+            log("Error: " + exception);
+        }
+    }
+
+    connect();
+})();
