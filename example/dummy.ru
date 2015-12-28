@@ -33,10 +33,9 @@ function appendP(text) {
   def start_counter
     Thread.abort_on_exception = true
     Thread.new do
-      counter = 0
       while true
         sleep 1
-        Socket2me.exec_js("appendP('[#{Time.now}]: #{counter += 1}')")
+        Socket2me.exec_js("appendP('#{Time.now}')")
       end
     end
   end

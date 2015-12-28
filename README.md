@@ -45,17 +45,16 @@ Or install it yourself as:
 
 ## Usage
 
-A full rack example is in `example/counter.ru`. That app simply creates
+A full rack example is in `example/dummy.ru`. That app simply creates
 an HTML page and provides a helper js function to display some output. The
-example then outputs the server time a counter every second in a background
-thread.
+example then outputs the server time every second in a background thread.
 
-To run `example/counter.ru`:
+To run `example/dummy.ru`:
 
 1. checkout the project: `git clone https://github.com/ddrscott/socket2me`
 2. go into the the socket2me directory: `cd socket2me`
 3. install requirements: `./bin/setup`
-4. start a rack server with the example: `rackup example/counter.ru`
+4. start a rack server with the example: `rackup example/dummy.ru`
 
 ### Rack
 ```ruby
@@ -81,8 +80,8 @@ After checking out the repo, run `bin/setup` to install dependencies. Then, run 
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
-Spot check everything works by running `rackup example/counter.ru`. The browser
-should continually append a timestamp and counter below the header.
+Spot check everything works by running `rackup example/dummy.ru`. The browser
+should continually append a timestamp below the header.
 
 ## Contributing
 

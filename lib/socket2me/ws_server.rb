@@ -41,8 +41,8 @@ module Socket2me
       @thread = Thread.new do
         EM::WebSocket.start(ws_options) do |ws|
           ws.onopen do |handshake|
-            @clients << ws
             log "onopen: #{handshake.headers}"
+            @clients << ws
           end
 
           ws.onclose do |event|
