@@ -50,7 +50,7 @@ an HTML page and provides a helper js function to display some output. The
 example then outputs the server time a counter every second in a background
 thread.
 
-To run `example/counter.rb`:
+To run `example/counter.ru`:
 
 1. checkout the project: `git clone https://github.com/ddrscott/socket2me`
 2. go into the the socket2me directory: `cd socket2me`
