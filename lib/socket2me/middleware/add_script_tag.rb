@@ -3,7 +3,6 @@ require 'em-websocket'
 module Socket2me
   module Middleware
     class AddScriptTag
-
       def initialize(app)
         @app = app
         @ws_url = "ws://#{Socket2me.config.ws_host}:#{Socket2me.config.ws_port}"
@@ -21,9 +20,9 @@ module Socket2me
         return response unless headers['Content-Type'] == 'text/html'
 
         # replace the last body with script
-        new_body = body.join.gsub(%r{(</body>)}i,"#{script_tag}\\1")
+        new_body = body.join.gsub(%r{(</body>)}i, "#{script_tag}\\1")
 
-        return status, headers, [new_body]
+        [status, headers, [new_body]]
       end
 
       # @return [String] the outer Javascript tag with WS client script

@@ -4,7 +4,6 @@ require 'socket2me/middleware/add_script_tag'
 require 'socket2me/ws_server'
 
 module Socket2me
-
   def self.start_ws_server
     WsServer.instance.start
   end

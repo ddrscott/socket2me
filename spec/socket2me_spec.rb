@@ -20,7 +20,7 @@ describe Socket2me do
     expect(Socket2me.config.ws_port).to eq('dogs')
   end
 
-  let(:app) { ->(_) { [200, {'Content-Type' => 'text/html'}, ['<html><body></body></html>']] } }
+  let(:app) { ->(_) { [200, { 'Content-Type' => 'text/html' }, ['<html><body></body></html>']] } }
 
   let(:middleware) { Socket2me::Middleware::AddScriptTag.new(app) }
 

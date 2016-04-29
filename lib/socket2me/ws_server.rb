@@ -16,8 +16,8 @@ module Socket2me
     # @return [Hash] hash of options compatible with EM::WebSocket#start
     def ws_options
       {
-          host: Socket2me.config.ws_host,
-          port: Socket2me.config.ws_port
+        host: Socket2me.config.ws_host,
+        port: Socket2me.config.ws_port
       }
     end
 

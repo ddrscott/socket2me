@@ -1,7 +1,6 @@
 require 'logger'
 
 module Socket2me
-
   class Configuration
     # @attr [String] ws_host for the WebSocket listener
     attr_accessor :ws_host
@@ -20,17 +19,13 @@ module Socket2me
     end
 
     # @param [Logger] logger to use
-    def logger=(logger)
-      @logger = logger
-    end
+    attr_writer :logger
   end
 
   # @yield [Configuration]
   def self.configure(&block)
     @config ||= Configuration.new
-    if block_given?
-      block.call @config
-    end
+    block.call @config if block_given?
   end
 
   # @return [Configuration] current configuration
