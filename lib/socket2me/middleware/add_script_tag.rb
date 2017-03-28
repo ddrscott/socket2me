@@ -17,10 +17,12 @@ module Socket2me
         response = @app.call(env)
         status, headers, body = *response
 
-        return response unless headers['Content-Type'] == 'text/html'
+        return response unless headers['Content-Type'].include?('text/html')
 
         # replace the last body with script
-        new_body = body.join.gsub(%r{(</body>)}i, "#{script_tag}\\1")
+        orig_body = body.respond_to?(:body) ? body.body : body.join
+        
+        new_body = orig_body.gsub(%r{(</body>)}i, "#{script_tag}\\1")
 
         [status, headers, [new_body]]
       end
